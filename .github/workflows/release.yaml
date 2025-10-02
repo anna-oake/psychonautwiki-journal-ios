@@ -1,0 +1,34 @@
+# stolen from https://github.com/khcrysalis/Feather/blob/5a7456447205fb1bea4e783ec066ee3dedd6a893/.github/workflows/release.yml
+name: Create New Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Compile Journal
+        run: |
+          make
+
+      - name: Get Version
+        id: get_version
+        run: |
+          VERSION=$(cat packages/version.txt)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: PsychonautWiki Journal v${{ env.VERSION }}
+          tag_name: v${{ env.VERSION }}
+          files: |
+            packages/*ipa
+          fail_on_unmatched_files: true
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
