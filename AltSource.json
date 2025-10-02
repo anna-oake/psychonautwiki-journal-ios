@@ -1,0 +1,23 @@
+{
+  "apps": [
+    {
+      "beta": false,
+      "bundleIdentifier": "isaak.PsychonautWiki-Journal",
+      "developerName": "isaakhanimann, published by anna-oake",
+      "downloadURL": "https://github.com/anna-oake/psychonautwiki-journal-ios/releases/download/v11.11-1/Journal-unsigned.ipa",
+      "iconURL": "https://raw.githubusercontent.com/anna-oake/psychonautwiki-journal-ios/refs/heads/main/PsychonautWiki%20Journal/Assets.xcassets/AppIcon.appiconset/1024.png",
+      "localizedDescription": "Learn about psychoactive substances, log ingestions, make notes and get an overview of your experiences.",
+      "name": "PsychonautWiki Journal",
+      "size": 4550920,
+      "subtitle": "Learn about psychoactive substances, log ingestions, make notes and get an overview of your experiences.",
+      "tintColor": "#A151FE",
+      "version": "11.11",
+      "versionDate": "2025-10-02T20:00:00+01:00",
+      "versionDescription": "Fixed import file picker"
+    }
+  ],
+  "identifier": "isaak.PsychonautWiki-Journal",
+  "name": "PsychonautWiki Journal",
+  "news": [],
+  "userInfo": {}
+}

@@ -8,9 +8,14 @@ PsychonautWiki Journal makes PsychonautWiki's info on psychoactive substances ea
 
 Users can also log their ingestions, make notes and get an overview of their experiences.
 
-<a href='https://apps.apple.com/ch/app/psychonautwiki-journal/id1582059415'>
-<img alt='Download on the App Store' src='README Assets/badge-appstore.svg' width='25%'/>
-</a>
+  <div>
+    <a href="https://intradeus.github.io/http-protocol-redirector?r=altstore://source?url=https://raw.githubusercontent.com/anna-oake/psychonautwiki-journal-ios/refs/heads/main/AltSource.json"><img src="./assets/badges/add_to_altstore.png" alt="Add to AltStore" height="40"></a>
+    &nbsp;
+    <a href="https://intradeus.github.io/http-protocol-redirector?r=sidestore://source?url=https://raw.githubusercontent.com/anna-oake/psychonautwiki-journal-ios/refs/heads/main/AltSource.json"><img src="./assets/badges/add_to_sidestore.png" alt="Add to SideStore" height="40"></a>
+    &nbsp;
+    <a href="https://intradeus.github.io/http-protocol-redirector?r=feather://source/https://raw.githubusercontent.com/anna-oake/psychonautwiki-journal-ios/refs/heads/main/AltSource.json"><img src="./assets/badges/add_to_feather.png" alt="Add to Feather" height="40"></a>
+    &nbsp;
+  </div>
 
 **Triple tap on the closed eye in settings to see all PsychonautWiki substances.**
 
