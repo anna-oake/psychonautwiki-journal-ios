@@ -17,6 +17,8 @@
 import AlertToast
 import SwiftUI
 import AppIntents
+import UniformTypeIdentifiers
+import UIKit
 
 struct SettingsScreen: View {
     @AppStorage(PersistenceController.isEyeOpenKey2) var isEyeOpen: Bool = false
@@ -216,22 +218,18 @@ struct SettingsContent: View {
             }
             eye
         }
-        .fileImporter(
-            isPresented: $isImporting,
-            allowedContentTypes: [.json]
-        ) { result in
-            do {
-                let selectedFile: URL = try result.get()
-                if selectedFile.startAccessingSecurityScopedResource() {
-                    let data = try Data(contentsOf: selectedFile)
+        .sheet(isPresented: $isImporting) {
+            DocumentPickerCopy(contentTypes: [.json]) { urls in
+                guard let url = urls.first else { return }
+                do {
+                    let data = try Data(contentsOf: url)
                     importData(data)
-                } else {
-                    toastViewModel.showErrorToast(message: "Permission Denied")
+                } catch {
+                    toastViewModel.showErrorToast(message: "Import Failed")
+                    print("Error reading file: \(error.localizedDescription)")
                 }
-                selectedFile.stopAccessingSecurityScopedResource()
-            } catch {
-                toastViewModel.showErrorToast(message: "Import Failed")
-                print("Error getting data: \(error.localizedDescription)")
+            } onCancel: {
+                // Optional: no-op on cancel
             }
         }
         .fileExporter(
@@ -277,6 +275,44 @@ struct SettingsContent: View {
         isEyeOpen.toggle()
         NotificationCenter.default.post(name: Notification.eyeName, object: nil)
         playHapticFeedback()
+    }
+}
+
+struct DocumentPickerCopy: UIViewControllerRepresentable {
+    var contentTypes: [UTType]
+    var allowsMultipleSelection: Bool = false
+    var onPick: ([URL]) -> Void
+    var onCancel: () -> Void = {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(onPick: onPick, onCancel: onCancel)
+    }
+
+    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: contentTypes, asCopy: true)
+        picker.allowsMultipleSelection = allowsMultipleSelection
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
+
+    final class Coordinator: NSObject, UIDocumentPickerDelegate {
+        let onPick: ([URL]) -> Void
+        let onCancel: () -> Void
+
+        init(onPick: @escaping ([URL]) -> Void, onCancel: @escaping () -> Void) {
+            self.onPick = onPick
+            self.onCancel = onCancel
+        }
+
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            onPick(urls)
+        }
+
+        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+            onCancel()
+        }
     }
 }
 
